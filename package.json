@@ -2,11 +2,7 @@
   "name": "p5ycho",
   "version": "1.0.0",
   "description": "Learning to master p5.js",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -d main.js dist/build.js"
-  },
+  "repository": "https://github.com/kgolid/p5ycho.git",
   "author": "Kjetil Midtgarden Golid",
   "license": "ISC"
 }
