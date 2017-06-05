@@ -6,48 +6,40 @@ let sketch = function(p) {
   let k = 0.0649;
   let t = 1.1;
 
-  let grid, prev;
-  p.setup = function(){
+  let grid = [];
+  let prev = [];
+
+  p.setup = function() {
     p.createCanvas(200,200);
     p.pixelDensity(1);
 
-    grid = [];
-    prev = [];
     for(let i = 0; i < p.width; i++) {
       grid[i] = [];
-      prev[i] = [];
-      for(let j = 0; j < p.height; j++){
-        grid[i][j] = {a:1, b:0};
-        prev[i][j] = {a:1, b:0};
+      for(let j = 0; j < p.height; j++) {
+        grid[i][j] = { a:1, b:0 };
       }
     }
+
     for (let i = 0; i < p.width; i++) {
       for (let j = 0; j < p.height; j++) {
         let r1 = p.sqrt(p.sq(i-90) + p.sq(j-90));
         let r2 = p.sqrt(p.sq(i-100) + p.sq(j-100));
         if(r1 < 5 || r2 < 5)
-          grid[i][j] = {a:0, b:1};
+          grid[i][j] = { a:0, b:1 };
       }
     }
   }
 
-  p.draw = function(){
+  p.draw = function() {
     update();
     display();
   }
 
   let update = function() {
-    for (let x = 0; x < p.width; x++) {
-      for (let y = 0; y < p.height; y++) {
-        prev[x][y].a = grid[x][y].a;
-        prev[x][y].b = grid[x][y].b;
-      }
-    }
+    p.arrayCopy(grid,prev);
     for (let x = 1; x < p.width-1; x++) {
       for (let y = 1; y < p.height-1; y++) {
-        let new_cell = update_cell(x,y);
-        grid[x][y].a = new_cell.a;
-        grid[x][y].b = new_cell.b;
+        grid[x][y] = update_cell(x,y);
       }
     }
   }
@@ -56,13 +48,13 @@ let sketch = function(p) {
     let a = prev[x][y].a;
     let b = prev[x][y].b;
 
-    let an = a + (da * l(x,y,"a") - (a * b * b) + f * (1 - a)) * t;
-    let bn = b + (db * l(x,y,"b") + (a * b * b) - (k + f) * b) * t;
+    let an = a + (da * laplacian(x,y,"a") - (a * b * b) + f * (1 - a)) * t;
+    let bn = b + (db * laplacian(x,y,"b") + (a * b * b) - (k + f) * b) * t;
 
     return {a:an, b:bn}
   }
 
-  let l = function(x,y,s) {
+  let laplacian = function(x,y,s) {
     var sum = 0;
 
     sum += prev[x][y][s] * -1;
