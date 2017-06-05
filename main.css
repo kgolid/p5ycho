@@ -1,4 +1,5 @@
-* {margin:0;
+* {
+  margin:0;
   padding:0;
   font-family: arial, sans-serif;
   font-size: 10pt;
@@ -7,6 +8,9 @@
   color: rgba(0,0,0,0.5);
   box-sizing: border-box;
 }
+
+h1 {font-size:2em;}
+a {display:block; margin:15px;}
 
 input[type=text], input[type=number] {
   background: none;
