@@ -39,7 +39,7 @@ var sketch = function (p) {
     pos.y = mod((pos.y + vel.y), h);
 
     let r = p5.Vector.fromAngle(p.noise(seed,t) * p.TWO_PI);
-    let r = p.createVector(p.random(-1,1),p.random(-1,1));
+    //let r = p.createVector(p.random(-1,1),p.random(-1,1));
     vel.x = r.x;
     vel.y = r.y;
   }
