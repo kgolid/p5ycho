@@ -2,7 +2,7 @@ var sketch = function (p) {
   const w = 800;
   const h = 800;
   let t = 0;
-  let n = 50;
+  let n = 100;
   let particles = [];
 
   p.setup = function() {
@@ -38,10 +38,10 @@ var sketch = function (p) {
     pos.x = mod((pos.x + vel.x), w);
     pos.y = mod((pos.y + vel.y), h);
 
-    //let r = p5.Vector.fromAngle(p.noise(seed,t) * p.TWO_PI);
-    //let r = p.createVector(p.random(-1,1),p.random(-1,1));
-    //vel.x = r.x;
-    //vel.y = r.y;
+    let r = p5.Vector.fromAngle(p.noise(seed,t) * p.TWO_PI);
+    let r = p.createVector(p.random(-1,1),p.random(-1,1));
+    vel.x = r.x;
+    vel.y = r.y;
   }
 
   let mod = function (x, n) {

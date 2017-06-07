@@ -14,7 +14,7 @@ let sketch = function(p) {
 
     for (var i = 0; i < p.width / psize; i++) {
       for (var j = 0; j < p.height / psize; j++) {
-        display_index(i, j);
+        display_noise_circle_time(i, j);
       }
     }
   }
@@ -25,33 +25,33 @@ let sketch = function(p) {
     p.fill(h, s, 100);
     p.rect(x * psize, y * psize, psize, psize);
   }
-  //
-  // let display_random = function(x, y) {
-  //   p.fill(0, 0, p.random(100));
-  //   p.rect(x * psize, y * psize, psize, psize);
-  // }
-  //
-  // let display_noise = function(x, y) {
-  //   p.fill(0, 0, p.noise(x / 10,y / 10) * 100 );
-  //   p.rect(x * psize, y * psize, psize, psize);
-  // }
-  //
-  // let display_noise_time = function(x, y) {
-  //   p.fill(0, 0, p.noise(x / 10,y / 10, tick / 200) * 100 );
-  //   p.rect(x * psize, y * psize, psize, psize);
-  // }
-  //
-  // let display_noise_circle = function(x, y) {
-  //   p.fill(0);
-  //   let d = p.noise(x / 10, y / 10) * psize;
-  //   p.ellipse(x * psize, y * psize, d);
-  // }
-  //
-  // let display_noise_circle_time = function(x, y) {
-  //   p.fill(0);
-  //   let d = p.noise(x / 10, y / 10, tick / 60) * psize;
-  //   p.ellipse(x * psize, y * psize, d);
-  // }
+  
+  let display_random = function(x, y) {
+    p.fill(0, 0, p.random(100));
+    p.rect(x * psize, y * psize, psize, psize);
+  }
+  
+  let display_noise = function(x, y) {
+    p.fill(0, 0, p.noise(x / 10,y / 10) * 100 );
+    p.rect(x * psize, y * psize, psize, psize);
+  }
+  
+  let display_noise_time = function(x, y) {
+    p.fill(0, 0, p.noise(x / 10,y / 10, tick / 200) * 100 );
+    p.rect(x * psize, y * psize, psize, psize);
+  }
+  
+  let display_noise_circle = function(x, y) {
+    p.fill(0);
+    let d = p.noise(x / 10, y / 10) * psize;
+    p.ellipse(x * psize, y * psize, d);
+  }
+  
+  let display_noise_circle_time = function(x, y) {
+    p.fill(0);
+    let d = p.noise(x / 10, y / 10, tick / 60) * psize;
+    p.ellipse(x * psize, y * psize, d);
+  }
 }
 
 new p5(sketch);
