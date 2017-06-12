@@ -34,12 +34,6 @@ let sketch = function(p) {
     display(n, angle);
   }
 
-  p.mousePressed = function() {
-    let n = p.int(p.random(3,6));
-    let angle = p.PI * p.random(2);
-    display(n, angle);
-  }
-
   let init = function(n) {
     p.translate(-size/2,0);
     poslist = [];
