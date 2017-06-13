@@ -1,49 +1,61 @@
 let sketch = function(p) {
-  let size = 300;
-  let poslist = [];
+  let size = 100;
+  let dim = 4;
 
+  let colors;
   p.setup = function() {
-    p.createCanvas(1200,800);
-    p.strokeWeight(10);
+    p.createCanvas(900,900);
+    p.strokeWeight(2);
     p.fill(255,100,85);
     p.blendMode(p.DARKEST);
-    p.frameRate(1);
+    p.frameRate(.6);
+    p.smooth();
+
+    colors = [p.color(255,135,95), p.color(255,135,95), p.color(255,225,95), p.color(75,215,225)];
 
     let n = p.int(p.random(3,6));
     let angle = p.PI * p.random(2);
-    display(n, angle);
+    display();
   }
 
-  let display = function(n, angle) {
-    p.clear();
-    p.translate(p.width/2, p.height/2);
+  let display = function() {
+    for (var i = 0; i < dim; i++) {
+      for (var j = 0; j < dim; j++) {
+        p.fill(colors[p.floor(p.random(colors.length))])
+        let pos = p.createVector(p.width / dim * (i + .5), p.height / dim * (j + .5));
+        draw_shape(pos)
+      }
+    }
+  }
+
+  let draw_shape = function(pos) {
+    let n = p.int(p.random(3,6));
+    let angle = p.PI * p.random(2);
+
+    p.push();
+    p.translate(pos.x, pos.y);
     p.rotate(angle);
     p.push();
-    init(n);
-    draw_arcs(generate_string(n));
+    draw_arcs(generate_string(n), create_initial_array(n));
     p.pop();
     p.rotate(p.PI);
-    init(n);
-    draw_arcs(generate_string(n));
-
+    draw_arcs(generate_string(n), create_initial_array(n));
+    p.pop();
   }
 
   p.draw = function() {
-    let n = p.int(p.random(3,6));
-    let angle = p.PI * p.random(2);
-    display(n, angle);
+    p.clear();
+    display();
   }
 
-  let init = function(n) {
+  let create_initial_array = function(n) {
     p.translate(-size/2,0);
-    poslist = [];
+    arr = [];
     for (var i = 0; i <= n; i++) {
-      var leaf = {
-        pos: i * (size / n),
-        parent: null
-      }
-      poslist.push(leaf);
+      var leaf = { pos: i * (size / n) };
+      arr.push(leaf);
     }
+    return arr
   }
 
   let generate_string = function(n) {
@@ -54,7 +66,7 @@ let sketch = function(p) {
     return p.shuffle(arr);
   }
 
-  let draw_arcs = function(rstring) {
+  let draw_arcs = function(rstring, poslist) {
     var totalHeight = 0;
     for (var i = 0; i < rstring.length; i++) {
       let area = rstring[i];
@@ -74,7 +86,7 @@ let sketch = function(p) {
       p.arc(center, 0, diameter, diameter, p.PI, p.TWO_PI);
       p.noStroke();
       p.rect(start.pos, -1, diameter, totalHeight + 2);
-      p.stroke(20);
+      p.stroke(35);
       p.translate(0, -radius);
 
       let new_point = { pos: center, parent: null }
@@ -91,7 +103,6 @@ let sketch = function(p) {
     }
     return point;
   }
-
 }
 
 new p5(sketch);
