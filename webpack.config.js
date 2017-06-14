@@ -1,6 +1,7 @@
 module.exports = {
   entry: {
-    perlin: './sketches/perlin/perlin.js'
+    perlin: './sketches/perlin/perlin.js',
+    gaussian: './sketches/gaussian/gaussian.js'
   },
 
   output: {
