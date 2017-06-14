@@ -6,7 +6,8 @@
   "author": "Kjetil Midtgarden Golid",
   "license": "ISC",
   "scripts": {
-    "watch": "webpack-dev-server --config webpack.config.js --hot"
+    "watch": "webpack-dev-server --config webpack.config.js --hot",
+    "build": "webpack -d --config webpack.config.js"
   },
   "dependencies": {
     "p5": "^0.5.11"

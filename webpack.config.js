@@ -5,6 +5,7 @@ module.exports = {
   },
 
   output: {
+    path: __dirname + "/sketches",
     filename: "[name].js"
   },
 
