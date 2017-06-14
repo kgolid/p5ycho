@@ -1,19 +1,21 @@
 let sketch = function(p) {
-  let size = 350;
-  let dim = 15;
+  let size = 400;
+  let dim = 9;
   let t;
   let at;
-  let cur;
 
   p.setup = function() {
     p.createCanvas(900,900);
     p.noStroke();
+    p.frameRate(1);
+  }
 
+  p.draw = function() {
+    p.clear();
     t = initial_array();
-    cur = {x:0,y:0,o:'u'};
+    let cur = {x:0,y:0,o:'u'};
     fill_cell(cur);
     at = get_unfilled_neighbors(cur).filter(hasHalo);
-
     while(at.length > 0) {
       step();
     }
@@ -59,7 +61,8 @@ let sketch = function(p) {
     for (var i = 0; i < dim; i++) {
       arr[i] = [];
       for (var j = 0; j < dim; j++) {
-        arr[i][j] = { u:0, d:0 };
+        if (j === dim-1 || i === dim-1 ) arr[i][j] = {u:1, d:1};
+        else arr[i][j] = { u:0, d:0 };
       }
     }
     return arr;
@@ -156,6 +159,12 @@ let sketch = function(p) {
       if (c.x > 0 && c.y > 0) {
         if (t[c.x-1][c.y-1]['d'] === 1) halo1 = false;
         if (t[c.x-1][c.y-1]['u'] === 1) halo1 = false;
+      } else if (c.x == 0 && c.y > 0) {
+        if (t[c.y-1][0]['d'] === 1) halo1 = false;
+        if (t[c.y-1][0]['u'] === 1) halo1 = false;
+      } else if (c.x > 0 && c.y == 0) {
+        if (t[0][c.x-1]['d'] === 1) halo1 = false;
+        if (t[0][c.x-1]['u'] === 1) halo1 = false;
       }
     }
     else if (c.o === 'd') {
@@ -204,6 +213,12 @@ let sketch = function(p) {
       if (c.x > 0 && c.y > 0) {
         if (t[c.x-1][c.y-1]['d'] === 1) halo1 = false;
         if (t[c.x-1][c.y-1]['u'] === 1) halo1 = false;
+      } else if (c.x == 0 && c.y > 0) {
+        if (t[c.y-1][0]['d'] === 1) halo1 = false;
+        if (t[c.y-1][0]['u'] === 1) halo1 = false;
+      } else if (c.x > 0 && c.y == 0) {
+        if (t[0][c.x-1]['d'] === 1) halo1 = false;
+        if (t[0][c.x-1]['u'] === 1) halo1 = false;
       }
     }
     return halo1;
