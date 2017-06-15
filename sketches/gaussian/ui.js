@@ -7,7 +7,7 @@ function init(p, n, r, points) {
   points = [];
   for (let i = 0; i < n; i++) {
     let rads = (i / n) * p.TWO_PI;
-    points.push(p.createVector(p.cos(rads) * r, p.sin(rads) * r, p.noise(i /50)));
+    points.push(p.createVector(p.cos(rads) * r, p.sin(rads) * r, p.random()));
   }
   for(let b = 0; b < 7; b++) {
     interpolate(p, points);
@@ -16,7 +16,7 @@ function init(p, n, r, points) {
 }
 
 function run (p, current, points) {
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 60; i++) {
     current = update(p, current, points);
     display(p, current);
   }
