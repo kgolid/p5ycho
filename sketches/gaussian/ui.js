@@ -16,7 +16,7 @@ function init(p, n, r, points) {
 }
 
 function run (p, current, points) {
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 50; i++) {
     current = update(p, current, points);
     display(p, current);
   }
