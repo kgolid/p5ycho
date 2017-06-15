@@ -1,7 +1,7 @@
 const p5 = require('p5');
 
-exports.update = update;
-exports.display = display;
+module.exports.update = update;
+module.exports.display = display;
 
 function display (p, pos, vel) {
   //p.line(pos.x, pos.y, (pos.x + vel.x), (pos.y + vel.y));

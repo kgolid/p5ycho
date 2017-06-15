@@ -1,8 +1,7 @@
 const p5 = require('p5');
 
-exports.run = run;
-exports.init = init;
-
+module.exports.run = run;
+module.exports.init = init;
 
 function init(p, n, r, points) {
   points = [];
