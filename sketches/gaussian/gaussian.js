@@ -11,9 +11,9 @@ let sketch = function(p) {
 
   p.setup = function() {
     var canvas = p.createCanvas(800, 800);
-    p.fill(0,25,90,6);
+    p.fill(0,22,65,6);
     p.noStroke();
-    p.frameRate(1);
+    p.frameRate(.5);
     p.blendMode(p.MULTIPLY);
 
     current = [];
