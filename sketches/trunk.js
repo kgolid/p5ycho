@@ -13,7 +13,7 @@ let sketch = function(p) {
   let oz = p.random(10000);
 
   p.setup = function(){
-    p.createCanvas(1250, 800);
+    p.createCanvas(800, 800);
     p.strokeWeight(1);
     p.stroke(0);
     p.smooth();
