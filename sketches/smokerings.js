@@ -18,15 +18,15 @@ let sketch = function(p) {
   }
 
   function display(){
-    ox+=0.015;
-    oy+=0.015;
-    oz+=0.01;
+    ox+=0.01;
+    oy+=0.01;
+    oz+=0.007;
 
     for(let i = 0; i < 50; i++){
       p.beginShape();
       for(let angle = 0; angle < 360; angle+=3){
         let radian = p.radians(angle);
-        let radius = 250 + p.map(getNoise(radian, 0.35, 0.015 * i), 0, 1, -150, 150);
+        let radius = 250 + p.map(getNoise(radian, 0.35, 0.02 * i), 0, 1, -150, 150);
         p.vertex(radius * p.cos(radian), radius * p.sin(radian));
       }
     p.endShape(p.CLOSE);
