@@ -7,7 +7,7 @@ let sketch = function(p) {
     p.noStroke();
     p.fill(255,240,230);
     p.blendMode(p.OVERLAY);
-    //p.noLoop();
+    p.noLoop();
     p.frameRate(1);
   }
 
