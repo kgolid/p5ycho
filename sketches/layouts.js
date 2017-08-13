@@ -26,7 +26,7 @@ let sketch = function(p) {
         p.stroke(84,85,115);
         display(xdim + j, ydim + i);
         p.strokeWeight(4);
-        p.stroke(30,255,172);
+        p.stroke(230,255,172);
         display(xdim + j, ydim + i);
 
         p.translate(120 + (j * size), 0);
