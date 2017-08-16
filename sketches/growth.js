@@ -6,8 +6,12 @@ let sketch = function(p) {
 
   p.setup = function() {
     p.createCanvas(850,850);
+    p.noStroke();
+    p.fill(255,100,90);
+    p.ellipse(p.width/2, p.height/2, 500, 500);
+
+    p.stroke(0);
     p.strokeWeight(1);
-    p.noFill();
 
     tree.push(
       {
@@ -37,7 +41,7 @@ let sketch = function(p) {
         for (var t = 0; t < number_of_tries; t++) {
           if (ok_position(u)) {
             if (p.random() < .4) current.exhausted = true;
-            tree.push({ pos: u, parent: index, exhausted: p.random() < .1 });
+            tree.push({ pos: u, parent: index, exhausted: p.random() < .15 });
             return false;
           }
           u = create_neighbour(current.pos); 
