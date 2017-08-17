@@ -4,11 +4,20 @@ let sketch = function(p) {
   let size = 20;
 
   let grid;
+  let colors;
+
 
   p.setup = function() {
     p.createCanvas(1200,850);
     p.noLoop();
     p.noFill();
+
+    colors = [
+      p.color(231,94,96),
+      p.color(249,190,82),
+      p.color(89,180,180),
+      p.color(197,149,197)
+    ];
   }
 
   p.draw = function() {
@@ -19,10 +28,11 @@ let sketch = function(p) {
       p.push();
       for (var j = 0; j < 9; j++) {
         p.strokeWeight(6);
-        p.stroke(84,85,115);
+        p.stroke(colors[p.floor(p.random(4))]);
+        //p.fill(colors[p.floor(p.random(4))]);
         display(p.min(j,4), p.min(i,3), 3 + dist(4,j) , 3 + dist(3,i));
         p.strokeWeight(2);
-        p.stroke(230,255,172);
+        p.stroke(20,39,49);
         p.noFill();
         display(p.min(j,4), p.min(i,3), 3 + dist(4,j) , 3 + dist(3,i));
 
@@ -65,7 +75,7 @@ let sketch = function(p) {
   }
 
   function flip_coin() {
-    return p.random() < .7 ? false:true
+    return p.random() < .6 ? false:true
   }
 
   function dist (n, m) {
