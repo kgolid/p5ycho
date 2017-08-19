@@ -49,8 +49,8 @@ let sketch = function(p) {
           let endx = p.constrain(stripe.end, -length, length);
           let startspeed = p.sqrt(2) - p.sqrt(stripe.y * stripe.y + startx * startx) / radius;
           let endspeed = p.sqrt(2) - p.sqrt(stripe.y * stripe.y + endx * endx) / radius;
-          stripe.start += 1.5 * startspeed; 
-          stripe.end += 1.5 * endspeed;
+          stripe.start += startspeed; 
+          stripe.end += endspeed;
         
       }
     }
