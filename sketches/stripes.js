@@ -1,9 +1,9 @@
 let sketch = function(p) {
   let rows = 20;
   let radius = 260;
-  let min_length = 15;
+  let min_length = 35;
   let max_length = 85;
-  let space = 25;
+  let space = 15;
   let stripes = [];
   let colors;
 
@@ -11,7 +11,7 @@ let sketch = function(p) {
     p.createCanvas(850,850);
     p.stroke(255);
     p.strokeWeight(14);
-    p.noLoop();
+    //p.noLoop();
 
     colors = [
       p.color(142,192,124),
@@ -23,36 +23,62 @@ let sketch = function(p) {
 
     for (var i = 0; i < rows; i++) {
       let ypos = ((i + .5)/rows) * (radius * 2) - radius;
-      let row_length = 2 * p.sqrt((radius * radius) - (ypos * ypos));
+      let row_length = get_row_length(ypos);
       add_stripe_row(ypos, row_length);
-      console.log(stripes);
-      
     }
   }
 
   p.draw = function() {
+    p.clear();
     p.translate(p.width / 2, p.height / 2);
-    for (var s in stripes) {
-      var stripe = stripes[s];
-      p.stroke(colors[p.floor(p.random(5))]);
-      p.line(stripe.start, stripe.y, stripe.end, stripe.y);
+    for (var row in stripes) {
+      for(var s in stripes[row]){
+        var stripe = stripes[row][s];
+        let length = get_row_length(stripe.y);
+        if(!is_outside_circle(stripe, length)){
+          p.stroke(stripe.color);
+          p.line(p.max((stripe.start+space), -length), stripe.y, p.min((stripe.end-space), length), stripe.y);
+        } else if (stripe.start > length){
+            stripes[row].splice(s,1);
+            let s_length = p.random(min_length,max_length);
+            let end = stripes[row][0].start;
+            let start = end - s_length;
+            stripes[row].unshift({y:stripe.y, start:start, end:end, color:colors[p.floor(p.random(5))]});
+        }
+          let startx = p.constrain(stripe.start, -length, length);
+          let endx = p.constrain(stripe.end, -length, length);
+          let startspeed = p.sqrt(2) - p.sqrt(stripe.y * stripe.y + startx * startx) / radius;
+          let endspeed = p.sqrt(2) - p.sqrt(stripe.y * stripe.y + endx * endx) / radius;
+          stripe.start += 1.5 * startspeed; 
+          stripe.end += 1.5 * endspeed;
+        
+      }
     }
   }
 
+  function get_row_length(ypos) {
+    if ((radius * radius) < (ypos * ypos)) return 0;
+    return p.sqrt((radius * radius) - (ypos * ypos));
+  }
+
+  function is_outside_circle(stripe, length) {
+    return stripe.end-space < -length || stripe.start+space > length;
+  }
+
   function add_stripe_row (ypos, row_length) {
-    //let length = p.max(0, p.randomGaussian(mean_length, deviation));
+    let row = [];
     let length = p.random(min_length,max_length);
-    let start = -.5 * row_length;
+    let start = -1000 + p.random(min_length,max_length);
     let end = start + length;
-    while (end < row_length / 2 - space - min_length) {
-      stripes.push({y:ypos, start:start, end:end});
-      //length = p.max(0,p.randomGaussian(mean_length, deviation));
+    while (end < -row_length) {
+      row.push({y:ypos, start:start, end:end, color:colors[p.floor(p.random(5))]});
       length = p.random(min_length,max_length);
-      start = end + space;
+      start = end;
       end = start + length;
     }
-    stripes.push({y:ypos, start:start, end:row_length / 2});
+    stripes.push(row);
   }
+
 }
 
 new p5(sketch);
