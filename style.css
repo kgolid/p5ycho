@@ -19,7 +19,7 @@ a { text-decoration:none; color:inherit; }
 a:hover { text-decoration: underline; }
 a span {font-weight:400; display: block;}
 
-body > * { margin: 80px 20px; }
+body > * { margin: 70px 20px 0 20px; }
 
 .logo-container { height:60px; padding:0 30px;}
 .logo-container img { height:100%; }
