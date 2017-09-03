@@ -32,13 +32,12 @@ let sketch = function(p) {
       let ypos = ((i + .5)/rows) * (radius * 2) - radius;
       let row_length = 2 * p.sqrt((radius * radius) - (ypos * ypos));
       add_stripe_row(ypos, row_length);
-      console.log(stripes);
-      
     }
   }
 
   p.draw = function() {
-    p.clear();
+    //p.clear();
+    p.background("#4f3854");
     p.translate(p.width / 2, p.height / 2);
     p.rotate(p.random(p.PI));
     for (var s in stripes) {
@@ -65,6 +64,13 @@ let sketch = function(p) {
       end = start + length;
     }
     stripes.push({y:ypos, start:start, end:row_length / 2});
+  }
+
+  p.keyPressed = function () {
+    console.log(p.keyCode);
+    if (p.keyCode === 80) {
+      p.saveCanvas();
+    }
   }
 }
 
