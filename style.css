@@ -27,7 +27,7 @@ body > * { margin: 70px 20px 0 20px; }
 body > article {
     display:flex;
     flex-wrap:wrap;
-    justify-content:space-between;
+    justify-content:center;
 }
 
 .elem {
