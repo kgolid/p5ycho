@@ -1,7 +1,7 @@
 let sketch = function(p) {
   let initial_size = 5;
-  let initial_deviation = 250;
-  let deviation = 100;
+  let initial_deviation = 200;
+  let deviation = 80;
 
   let points;
   let current;
@@ -10,7 +10,7 @@ let sketch = function(p) {
     p.createCanvas(1000, 1000);
     p.noStroke();
     p.colorMode(p.HSB);
-    p.blendMode(p.OVERLAY);
+    p.blendMode(p.MULTIPLY);
     p.noLoop();
 
   }
@@ -45,9 +45,9 @@ let sketch = function(p) {
   function init () {
     points = [];
     for (var i = 0; i < initial_size; i++) {
-      points.push(p.createVector((i / (initial_size - 1)) * p.width - (p.width/2), 200, p.random(-1,1)));
+      points.push(p.createVector((i / (initial_size - 1)) * p.width - (p.width/2), 100, p.random(-1,1)));
     }
-    for(let b = 0; b < 5; b++) {
+    for(let b = 0; b < 6; b++) {
       interpolate(points, initial_deviation);
     }
   }
@@ -79,7 +79,7 @@ let sketch = function(p) {
   }
 
   function generate_midpoint (p1, p2, sd) {
-    let p3 = p.createVector((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, ((p1.z + p2.z) / 2) * .55 * p.random(.1, 3));
+    let p3 = p.createVector((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, ((p1.z + p2.z) / 2) * .55 * p.random(.5, 2.5));
     move_nearby(p3, sd);
     return p3;
   }
