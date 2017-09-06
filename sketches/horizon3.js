@@ -32,7 +32,7 @@ let sketch = function(p) {
     for (var i = 0; i < initial_size; i++) {
       points.push(p.createVector((i / (initial_size - 1)) * p.width, ypos, p.random(-1,1)));
     }
-    for(let b = 0; b < 5; b++) {
+    for(let b = 0; b < 6; b++) {
       interpolate(points, initial_deviation);
     }
   }
