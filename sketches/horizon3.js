@@ -7,7 +7,7 @@ let sketch = function(p) {
   let current;
 
   p.setup = function() {
-    p.createCanvas(p.windowWidth-100, p.windowHeight-100);
+    p.createCanvas(1500, 1000);
     p.noStroke();
     p.colorMode(p.HSB);
     p.blendMode(p.MULTIPLY);
@@ -19,7 +19,7 @@ let sketch = function(p) {
 
     for (var h = -100; h < p.height; h+=250) {
       init(h);
-      p.fill(p.random(360),100,50, .01);
+      p.fill(p.random(360),100,80, .01);
       for (var i = 0; i < 35; i++) {
         current = update();
         display();
