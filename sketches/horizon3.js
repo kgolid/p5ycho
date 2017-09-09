@@ -8,15 +8,15 @@ let sketch = function(p) {
 
   p.setup = function() {
     p.createCanvas(1500, 1000);
+    p.background("#ffface");
     p.noStroke();
     p.colorMode(p.HSB);
-    p.blendMode(p.MULTIPLY);
+    p.blendMode(p.DARKEST);
     p.noLoop();
 
   }
 
   p.draw = function() {
-
     for (var h = -100; h < p.height; h+=250) {
       init(h);
       p.fill(p.random(360),100,80, .01);
@@ -80,6 +80,12 @@ let sketch = function(p) {
       narr.push(arr[i].copy());
     }
     return narr;
+  }
+
+  p.keyPressed = function () {
+    if (p.keyCode === 80) {
+      p.saveCanvas("foggy", "jpeg");
+    }
   }
 }
 new p5(sketch);
