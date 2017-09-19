@@ -3,10 +3,10 @@ let sketch = function(p) {
   let height = 900;
   let offset = 100;
 
-  let flow_cell_size = 5;
+  let flow_cell_size = 10;
 
-  let noise_size = .002;
-  let noise_radius = .2;
+  let noise_size = .003;
+  let noise_radius = .1;
 
   let flow_width = (width + offset * 2) / flow_cell_size;
   let flow_height = (height + offset * 2) / flow_cell_size;
@@ -14,7 +14,7 @@ let sketch = function(p) {
   let noise_grid = [];
   let flow_grid = [];
 
-  let number_of_particles = 10000;
+  let number_of_particles = 4500;
   let particles = [];
 
   let tick = 0;
@@ -63,11 +63,11 @@ let sketch = function(p) {
       prt.pos.x = mod((prt.pos.x + prt.vel.x), p.width + 2 * offset);
       prt.pos.y = mod((prt.pos.y + prt.vel.y), p.height + 2 * offset);
 
-      prt.vel.add(prt.acc).normalize().mult(2);
+      prt.vel.add(prt.acc).normalize().mult(2.2);
       
       //prt.acc = p5.Vector.fromAngle(p.noise(prt.seed * 10, tick) * p.TAU).mult(0.01);
       prt.acc = p.createVector(0,0);
-      prt.acc.add(flow).mult(4);
+      prt.acc.add(flow).mult(3);
     }
   }
 
