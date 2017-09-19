@@ -14,7 +14,7 @@ let sketch = function(p) {
   let noise_grid = [];
   let flow_grid = [];
 
-  let number_of_particles = 8000;
+  let number_of_particles = 10000;
   let particles = [];
 
   let tick = 0;
@@ -112,8 +112,8 @@ let sketch = function(p) {
   }
 
   function get_flow(xpos,ypos) {
-    xpos = p.constrain(xpos, 0, p.width);
-    ypos = p.constrain(ypos, 0, p.height);
+    xpos = p.constrain(xpos, 0, p.width + offset * 2);
+    ypos = p.constrain(ypos, 0, p.height + offset * 2);
     return flow_grid[p.floor(ypos / flow_cell_size)][p.floor(xpos / flow_cell_size)]
   }
 
