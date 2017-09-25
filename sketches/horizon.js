@@ -10,43 +10,32 @@ let sketch = function(p) {
     p.createCanvas(1400, 900);
     p.noStroke();
     p.colorMode(p.HSB);
-    //p.blendMode(p.SOFT_LIGHT);
-    p.fill(0, 0, 0, .015);
+    p.fill(0, 0, 0, 0.015);
     p.noLoop();
-
-  }
+  };
 
   p.draw = function() {
-    p.translate(p.width/2,p.height/2);
+    p.translate(p.width / 2, p.height / 2);
     init();
-    for (var i = 0; i < 150; i++) {
+    for (var i = 0; i < 180; i++) {
       current = update();
       display();
     }
-    /*
-    init(); 
-    p.rotate(p.PI);
-    p.fill(320,70,60, .015);
-    for (var i = 0; i < 50; i++) {
-      current = update();
-      display();
-    }
-    */
-  }
-  
-  function init () {
+  };
+
+  function init() {
     points = [];
     for (var i = 0; i < initial_size; i++) {
-      points.push(p.createVector((i / (initial_size - 1)) * p.width - (p.width/2), 100, p.random(-1,1)));
+      points.push(p.createVector(i / (initial_size - 1) * p.width - p.width / 2, 200, p.random(-1, 1)));
     }
-    for(let b = 0; b < 5; b++) {
+    for (let b = 0; b < 5; b++) {
       interpolate(points, initial_deviation);
     }
   }
-  
-  function update () {
+
+  function update() {
     let c = deep_copy(points);
-    for(let b = 0; b < 5; b++) {
+    for (let b = 0; b < 7; b++) {
       for (let i = 0; i < c.length; i++) {
         move_nearby(c[i], deviation);
       }
@@ -54,24 +43,24 @@ let sketch = function(p) {
     return c;
   }
 
-  function display () {
+  function display() {
     p.beginShape();
     for (let i = 0; i < current.length; i++) {
       p.vertex(current[i].x, current[i].y);
     }
-    p.vertex(p.width/2,p.height/2);
-    p.vertex(-p.width/2,p.height/2);
+    p.vertex(p.width / 2, p.height / 2);
+    p.vertex(-p.width / 2, p.height / 2);
     p.endShape(p.CLOSE);
   }
 
-  function interpolate (points, sd) {
-    for (var i = points.length-1; i > 0; i--) {
-      points.splice(i, 0, generate_midpoint(points[i-1], points[i], sd));
+  function interpolate(points, sd) {
+    for (var i = points.length - 1; i > 0; i--) {
+      points.splice(i, 0, generate_midpoint(points[i - 1], points[i], sd));
     }
   }
 
-  function generate_midpoint (p1, p2, sd) {
-    let p3 = p.createVector((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, ((p1.z + p2.z) / 2) * .55 * p.random(.1, 3));
+  function generate_midpoint(p1, p2, sd) {
+    let p3 = p.createVector((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, (p1.z + p2.z) / 2 * 0.55 * p.random(0.1, 2.8));
     move_nearby(p3, sd);
     return p3;
   }
@@ -79,7 +68,7 @@ let sketch = function(p) {
   let move_nearby = function(pnt, sd) {
     pnt.x = p.randomGaussian(pnt.x, pnt.z * sd);
     pnt.y = p.randomGaussian(pnt.y, pnt.z * sd);
-  }
+  };
 
   let deep_copy = function(arr) {
     let narr = [];
@@ -87,6 +76,6 @@ let sketch = function(p) {
       narr.push(arr[i].copy());
     }
     return narr;
-  }
-}
+  };
+};
 new p5(sketch);
