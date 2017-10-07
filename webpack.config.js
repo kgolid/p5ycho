@@ -1,17 +1,15 @@
 module.exports = {
   entry: {
-    perlin: './sketches/perlin/perlin.js',
-    gaussian: './sketches/gaussian/gaussian.js'
+    perlin: './perlin/sketch.js',
+    gaussian: './gaussian/sketch.js'
   },
 
   output: {
-    path: __dirname + "/sketches",
-    filename: "[name].js"
+    path: __dirname + '/dist',
+    filename: '[name].bundle.js'
   },
 
   module: {
-    loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loaders: ['./hot'] },
-    ]
+    loaders: [{ test: /\.js$/, exclude: /node_modules/, loaders: ['./hot'] }]
   }
 };
