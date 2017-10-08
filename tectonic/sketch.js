@@ -40,7 +40,6 @@ let sketch = function(p) {
 
   p.draw = function() {
     p.background('#e0e1db');
-    //p.background('#fff');
     let current_height = 0;
     p.translate(65, p.height - 65);
     blocks.forEach(function(block, index) {
@@ -83,7 +82,6 @@ let sketch = function(p) {
         color: palette[p.floor(p.random(palette.length))]
       });
     }
-    console.log(plates);
     return plates;
   }
 
@@ -96,8 +94,6 @@ let sketch = function(p) {
         p.vertex(width, 0);
       } else {
         for (let i = 0; i <= resolution; i++) {
-          //p.vertex(i * width / resolution, magnitude * p.noise((index - 1) * 3, i / noise_zoom, block_index * 3));
-          //console.log(i, block[0]);
           p.vertex(i * width / resolution, block[index - 1].points[i] - plate_padding);
         }
       }
@@ -109,7 +105,6 @@ let sketch = function(p) {
   }
 
   function get_noise(x, y, z) {
-    //console.log(magnitude * p.noise(x / noise_zoom, y * 10, z * 3));
     return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.4);
   }
 
