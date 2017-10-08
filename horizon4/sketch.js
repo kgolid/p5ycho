@@ -26,7 +26,8 @@ let sketch = function(p) {
     purple_green: [44, 1, 166, 286, 165, 80],
     orange_purple: [335, 54, 198, 312, 91, 261],
     lavarock: [200, 32, 359, 27, 208, 187],
-    dusk: [206, 61, 51, 224, 26, 40]
+    dusk: [206, 61, 51, 224, 26, 40],
+    rainbow: [260, 83, 17, 68, 227, 297]
   };
 
   p.setup = function() {
