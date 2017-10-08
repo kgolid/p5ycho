@@ -4,7 +4,7 @@ let sketch = function(p) {
   let width = 500;
   let resolution = 250;
 
-  let noise_zoom = 150;
+  let noise_zoom = 180;
   let magnitude = 100;
 
   let plate_padding = 0;
@@ -21,12 +21,12 @@ let sketch = function(p) {
     p.strokeWeight(1);
 
     palette = [
-      p.color(145, 172, 183),
-      p.color(182, 32, 36),
-      p.color(155, 80, 43),
-      p.color(81, 82, 111),
-      p.color(201, 179, 171),
-      p.color(221, 226, 222)
+      p.color(240, 204, 18),
+      p.color(236, 65, 38),
+      p.color(170, 132, 94),
+      p.color(244, 188, 191),
+      p.color(118, 158, 190),
+      p.color(234, 235, 230)
     ];
 
     THE_SEED = p.floor(p.random(9999999));
@@ -104,7 +104,7 @@ let sketch = function(p) {
   }
 
   function get_noise(x, y, z) {
-    return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.4);
+    return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.3);
   }
 
   p.keyPressed = function() {
