@@ -1,0 +1,32 @@
+#controller {
+  position: relative;
+  top: -240px;
+  margin: 20px;
+}
+
+#controller > div {
+  vertical-align: bottom;
+  display: inline-block;
+  width: 200px;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid white;
+  color: #fff;
+}
+
+#controller input[type='number'] {
+  display: inline-block;
+  border: none;
+  padding: 5px;
+  width: 80px;
+  margin: 3px;
+}
+
+#controller button {
+  width: 100%;
+  height: 30px;
+  border: none;
+  background: #fff;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
