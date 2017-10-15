@@ -147,7 +147,7 @@ let sketch = function(p) {
     let palette_container = p.createDiv('').parent('controller');
     let get_palette_button = p.createButton('Get palette from image').parent(palette_container);
     for (var i = 0; i < number_of_layers; i++) {
-      hue_inputs.push(p.createInput(i * 40 + 20, 'number').parent(palette_container));
+      hue_inputs.push(p.createInput(0, 'number').parent(palette_container));
     }
     use_this_palette_checkbox = p.createCheckbox('Use this palette', false).parent(palette_container);
 
@@ -157,8 +157,8 @@ let sketch = function(p) {
     use_this_shape_checkbox = p.createCheckbox('Use this shape', false).parent(shape_container);
 
     let action_container = p.createDiv('').parent('controller');
-    let generate_button = p.createButton('Generate (G)').parent(action_container);
-    let download_button = p.createButton('Download (P)').parent(action_container);
+    let generate_button = p.createButton('Generate (A)').parent(action_container);
+    let download_button = p.createButton('Download (S)').parent(action_container);
 
     get_palette_button.mousePressed(update_hue_inputs);
     get_shape_button.mousePressed(update_shape_input);
@@ -187,11 +187,11 @@ let sketch = function(p) {
   };
 
   p.keyPressed = function() {
-    if (p.keyCode === 80) {
-      // P key
+    if (p.keyCode === 83) {
+      // S key
       saveToFile();
-    } else if (p.keyCode === 71) {
-      // G key
+    } else if (p.keyCode === 65) {
+      // A key
       p.draw();
     }
   };
