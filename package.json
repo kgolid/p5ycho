@@ -4,7 +4,7 @@
   "description": "Learning to master p5.js",
   "repository": "https://github.com/kgolid/p5ycho.git",
   "author": "Kjetil Midtgarden Golid",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "watch": "webpack-dev-server --config webpack.config.js --hot",
     "build": "webpack -d --config webpack.config.js"
