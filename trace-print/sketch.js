@@ -50,7 +50,7 @@ let sketch = function(p) {
   };
 
   p.keyPressed = function() {
-    if (p.keyCode === 80) p.saveCanvas('sketch_' + THE_SEED, 'jpeg');
+    if (p.keyCode === 80) p.saveCanvas('sketch_' + THE_SEED, 'jpg');
   };
 
   class Particle {
