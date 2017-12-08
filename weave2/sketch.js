@@ -49,9 +49,9 @@ let sketch = function(p) {
       let row = [];
       for (let j = 0; j < flow_width; j++) {
         row.push(
-          calculate_flow(
-            j * noise_size + p.floor(9 * i / flow_height),
-            i * noise_size + 25 * noise_size * p.floor(3 * j / flow_width),
+          calculate_flow2(
+            j * noise_size + p.floor(3 * i / flow_height),
+            i * noise_size + 25 * noise_size * p.floor(6 * j / flow_width),
             noise_radius
           )
         );
@@ -85,6 +85,42 @@ let sketch = function(p) {
 
     let flow_angle = p.createVector(low_pos.x - high_pos.x, low_pos.y - high_pos.y);
     flow_angle.normalize().mult((high_val - low_val) / noise_radius);
+    return { arrow: flow_angle, point: p.noise(x, y) };
+  }
+  function calculate_flow2(x, y, r) {
+    let diff = 0;
+    let max_diff = 0;
+    let low_pos = p.createVector(0, 0);
+    let high_pos = p.createVector(0, 0);
+
+    for (var i = 0; i < 30; i++) {
+      let angle = p.random(p.TAU);
+      let pos1 = p.createVector(x + p.cos(angle) * r, y + p.sin(angle) * r);
+      let pos2 = p.createVector(x + p.cos(angle + p.PI) * r, y + p.sin(angle + p.PI) * r);
+
+      let val1 = p.noise(noise_offset_x + pos1.x, noise_offset_y + pos1.y);
+      let val2 = p.noise(noise_offset_x + pos2.x, noise_offset_y + pos2.y);
+
+      diff = p.abs(val2 - val1);
+
+      if (diff > max_diff) {
+        max_diff = diff;
+        if (val1 < val2) {
+          low_pos.x = pos1.x;
+          low_pos.y = pos1.y;
+          high_pos.x = pos2.x;
+          high_pos.y = pos2.y;
+        } else {
+          low_pos.x = pos2.x;
+          low_pos.y = pos2.y;
+          high_pos.x = pos1.x;
+          high_pos.y = pos1.y;
+        }
+      }
+    }
+
+    let flow_angle = p.createVector(low_pos.x - high_pos.x, low_pos.y - high_pos.y);
+    flow_angle.normalize().mult(max_diff / noise_radius);
     return { arrow: flow_angle, point: p.noise(x, y) };
   }
 
