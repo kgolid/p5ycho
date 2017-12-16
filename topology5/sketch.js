@@ -24,8 +24,8 @@ let sketch = function(p) {
     let c = p.createCanvas(width, height);
     p.smooth();
 
-    col1 = p.color(p.random(255), p.random(255), p.random(255), 12);
-    col2 = p.color(p.random(255), p.random(255), p.random(255), 12);
+    col1 = p.color(p.random(255), p.random(255), p.random(255), 13);
+    col2 = p.color(p.random(255), p.random(255), p.random(255), 13);
 
     init_particles();
     init_flow();
@@ -117,8 +117,8 @@ let sketch = function(p) {
     let flow_angle = p.createVector(x - high_pos.x, y - high_pos.y);
     flow_angle
       .normalize()
-      .mult(0.05)
-      //.mult(1 - (high_val - low_val))
+      .mult(20)
+      .mult(high_val - low_val)
       .rotate(p.HALF_PI);
 
     return flow_angle;
