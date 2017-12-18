@@ -8,7 +8,7 @@ let sketch = function(p) {
   let dimx = 200;
   let dimy = 200;
 
-  let pad = 50;
+  let pad = 150;
 
   p.setup = function() {
     p.createCanvas(1000, 1000);
