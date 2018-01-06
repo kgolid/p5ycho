@@ -1,23 +1,27 @@
 let sketch = function(p) {
   let THE_SEED;
-  let border = 400;
-  let number_of_particles = 6000;
-  let number_of_particle_sets = 8;
+  let border = 800;
+  let number_of_particles = 12000;
+  let number_of_particle_sets = 6;
   let particle_sets = [];
+
   let tick = 0;
+  let print_time = 5000; // Number of frames until printing result.
 
   let palette;
 
-  let ndim = 3000;
+  let ndimx = 4200;
+  let ndimy = 5900;
 
   p.setup = function() {
-    p.createCanvas(2100, 2950);
-    THE_SEED = p.floor(p.random(9999999));
+    p.createCanvas(4200, 5900);
+    p.background('#e7e7db');
+    THE_SEED = p.floor(p.random(65536));
     p.randomSeed(THE_SEED);
+    console.log(THE_SEED);
 
     p.noFill();
-    p.background('#fff');
-    p.stroke(0, 10);
+    p.stroke(0, 18);
     p.strokeWeight(1);
     p.smooth();
 
@@ -26,12 +30,17 @@ let sketch = function(p) {
     for (var j = 0; j < number_of_particle_sets; j++) {
       let ps = [];
       for (var i = 0; i < number_of_particles; i++) {
+        let ry = border + p.random(p.height - 2 * border);
+        let b = p.map(ry, 0, p.height, 1.5, 0.6) * border;
+        let rx = b + p.random(p.width - 2 * b);
         ps.push(
           new Particle(
-            p.randomGaussian(p.width / 2, p.width / 9),
+            //p.randomGaussian(p.width / 2, p.width / 5),
             //border + p.random(p.width - 2 * border),
             //border + p.random(p.height - 2 * border),
-            p.randomGaussian(p.height / 2, p.height / 9),
+            //p.randomGaussian(p.height / 2, p.height / 4),
+            rx,
+            ry,
             p.random(p.TWO_PI)
           )
         );
@@ -47,6 +56,11 @@ let sketch = function(p) {
         particle.display(index);
       });
     });
+    tick++;
+    if (tick == print_time) {
+      display_watermark(THE_SEED);
+      p.saveCanvas('traceprint_' + THE_SEED, 'jpg');
+    }
   };
 
   p.keyPressed = function() {
@@ -65,30 +79,51 @@ let sketch = function(p) {
       this.pos.x += p.cos(this.angle);
       this.pos.y += p.sin(this.angle);
 
-      let nx = p.map(this.pos.y, 0, ndim, 4, 0.2) * p.map(this.pos.x, 0, ndim, -2, 2);
-      let ny = 3 * p.map(this.pos.y, 0, ndim, 4, 0.2) * p.map(this.pos.y, 0, ndim, -2, 2);
+      let nx = p.map(this.pos.y, 0, ndimy, 3.6, 0.4) * p.map(this.pos.x, 0, ndimx, -2, 2);
+      let ny = 1.2 * p.pow(p.map(this.pos.y, 0, ndimy, 3.6, 0.4), 2.1);
+      //console.log(nx, ny);
 
       let n = p.createVector(nx, ny);
 
-      this.altitude = p.noise(n.x + 423.232, n.y - 431.423);
-      let nval = (this.altitude + 0.045 * (index - number_of_particle_sets / 2)) % 1;
+      this.altitude = p.noise(n.x + 15.232, n.y + 12.654);
+      let nval = this.altitude + 0.06 * (index - number_of_particle_sets / 2);
 
-      this.angle += 3 * p.map(nval, 0, 1, -1, 1);
+      this.angle += 1 * p.map(nval, 0, 1, -1, 1);
       this.val = nval;
     }
 
     display(index) {
-      if (this.val > 0.482 && this.val < 0.518) {
+      if (this.val > 0.478 && this.val < 0.522) {
         //p.stroke(palette[index % palette.length]);
         //if (index === 2) p.stroke(255, 25, 20, 20);
         //else p.stroke(20, 10);
         p.push();
-        p.translate(this.pos.x, this.pos.y + 40 - 80 * this.altitude * p.map(this.pos.y, 0, ndim, 0.2, 4));
+        p.translate(this.pos.x, this.pos.y + 160 - 160 * this.altitude * p.map(this.pos.y, 0, ndimy, 0.4, 3.4));
         p.rotate(this.angle);
         p.point(0, 0);
         p.pop();
       }
     }
+  }
+
+  function display_watermark(num) {
+    let dim = 40;
+    p.push();
+    p.stroke(255, 90, 80);
+    p.strokeWeight(10);
+    p.translate(p.width - 300, p.height - 300);
+    for (var i = 16; i > 0; i--) {
+      p.noFill();
+
+      let powi = p.pow(2, i);
+      if (num >= powi) {
+        num -= powi;
+        p.fill(255, 90, 80);
+      }
+      p.rect(((16 - i) % 4) * dim, p.floor((16 - i) / 4) * dim, dim, dim);
+    }
+    p.rect(-20, -20, dim * 4 + 40, dim * 4 + 40);
+    p.pop();
   }
 };
 new p5(sketch);
