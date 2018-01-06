@@ -15,7 +15,7 @@ let sketch = function(p) {
 
   p.setup = function() {
     p.createCanvas(4200, 5900);
-    p.background('#e7e7db');
+    p.background('#fff');
     THE_SEED = p.floor(p.random(65536));
     p.randomSeed(THE_SEED);
     console.log(THE_SEED);
@@ -109,18 +109,18 @@ let sketch = function(p) {
   function display_watermark(num) {
     let dim = 40;
     p.push();
+    p.noFill();
     p.stroke(255, 90, 80);
     p.strokeWeight(10);
     p.translate(p.width - 300, p.height - 300);
     for (var i = 16; i > 0; i--) {
-      p.noFill();
-
       let powi = p.pow(2, i);
       if (num >= powi) {
         num -= powi;
         p.fill(255, 90, 80);
       }
       p.rect(((16 - i) % 4) * dim, p.floor((16 - i) / 4) * dim, dim, dim);
+      p.noFill();
     }
     p.rect(-20, -20, dim * 4 + 40, dim * 4 + 40);
     p.pop();
