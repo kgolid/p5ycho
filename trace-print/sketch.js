@@ -113,13 +113,13 @@ let sketch = function(p) {
     p.stroke(255, 90, 80);
     p.strokeWeight(10);
     p.translate(p.width - 300, p.height - 300);
-    for (var i = 16; i > 0; i--) {
+    for (var i = 15; i >= 0; i--) {
       let powi = p.pow(2, i);
       if (num >= powi) {
         num -= powi;
         p.fill(255, 90, 80);
       }
-      p.rect(((16 - i) % 4) * dim, p.floor((16 - i) / 4) * dim, dim, dim);
+      p.rect(((15 - i) % 4) * dim, p.floor((15 - i) / 4) * dim, dim, dim);
       p.noFill();
     }
     p.rect(-20, -20, dim * 4 + 40, dim * 4 + 40);
