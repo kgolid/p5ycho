@@ -1,11 +1,14 @@
 let sketch = function(p) {
+  let THE_SEED;
   let padding = 16;
-  let cutoff = 64;
+  let cutoff = 72;
   let palette;
 
   p.setup = function() {
     p.createCanvas(600, 600);
     p.frameRate(2);
+    THE_SEED = p.floor(p.random(9999999));
+    p.randomSeed(THE_SEED);
 
     p.background('#ebebe4');
     p.strokeWeight(4);
@@ -32,7 +35,10 @@ let sketch = function(p) {
   };
 
   function draw_section(v1, v2) {
-    if (v2.x - v1.x < cutoff || v2.y - v1.y < cutoff) return;
+    if (v2.x - v1.x < cutoff || v2.y - v1.y < cutoff) {
+      draw_block(v1, v2);
+      return;
+    }
     let decide = p.random();
 
     if (decide < 0.5) {
