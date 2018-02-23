@@ -1,12 +1,12 @@
 let sketch = function(p) {
   let THE_SEED;
-  let border = 800;
+  let border = 600;
   let number_of_particles = 12000;
   let number_of_particle_sets = 6;
   let particle_sets = [];
 
   let tick = 0;
-  let print_time = 5000; // Number of frames until printing result.
+  let print_time = 4000; // Number of frames until printing result.
 
   let palette;
 
@@ -14,33 +14,39 @@ let sketch = function(p) {
   let ndimy = 5900;
 
   p.setup = function() {
-    p.createCanvas(4200, 5900);
-    p.background('#fff');
+    p.createCanvas(4200, 5940);
+    p.background('#eeeee5');
     THE_SEED = p.floor(p.random(65536));
+    //THE_SEED = 48778;
     p.randomSeed(THE_SEED);
+    p.noiseSeed(THE_SEED);
     console.log(THE_SEED);
+    //p.pixelDensity(3);
 
     p.noFill();
     p.stroke(0, 18);
     p.strokeWeight(1);
-    p.smooth();
+    //p.smooth();
 
     palette = [p.color(80, 55, 83, 20), p.color(21, 142, 121, 20)];
 
     for (var j = 0; j < number_of_particle_sets; j++) {
       let ps = [];
       for (var i = 0; i < number_of_particles; i++) {
-        let ry = border + p.random(p.height - 2 * border);
-        let b = p.map(ry, 0, p.height, 1.5, 0.6) * border;
-        let rx = b + p.random(p.width - 2 * b);
+        let ry1 = border + p.random(p.height - 2 * border);
+        let ry2 = border + p.random(p.height - 2 * border);
+        let b1 = p.map(ry1, 0, p.height, 1.5, 0.6) * border;
+        let b2 = p.map(ry2, 0, p.height, 1.5, 0.6) * border;
+        let rx1 = b1 + p.random(p.width - 2 * b1);
+        let rx2 = b2 + p.random(p.width - 2 * b2);
         ps.push(
           new Particle(
             //p.randomGaussian(p.width / 2, p.width / 5),
             //border + p.random(p.width - 2 * border),
             //border + p.random(p.height - 2 * border),
             //p.randomGaussian(p.height / 2, p.height / 4),
-            rx,
-            ry,
+            (rx1 + rx2) / 2,
+            (ry1 + ry2) / 2,
             p.random(p.TWO_PI)
           )
         );
@@ -57,6 +63,9 @@ let sketch = function(p) {
       });
     });
     tick++;
+
+    if (tick % 500 == 0) console.log(tick, ' / ', print_time);
+
     if (tick == print_time) {
       display_watermark(THE_SEED);
       p.saveCanvas('traceprint_' + THE_SEED, 'jpg');
@@ -79,26 +88,26 @@ let sketch = function(p) {
       this.pos.x += p.cos(this.angle);
       this.pos.y += p.sin(this.angle);
 
-      let nx = p.map(this.pos.y, 0, ndimy, 3.6, 0.4) * p.map(this.pos.x, 0, ndimx, -2, 2);
-      let ny = 1.2 * p.pow(p.map(this.pos.y, 0, ndimy, 3.6, 0.4), 2.1);
+      let nx = p.map(this.pos.y, 0, ndimy, 4.6, 0.2) * p.map(this.pos.x, 0, ndimx, -2, 2);
+      let ny = 1.5 * p.pow(p.map(this.pos.y, 0, ndimy, 4.6, 0.2), 2.1);
       //console.log(nx, ny);
 
-      let n = p.createVector(nx, ny);
+      let n = p.createVector(nx * 0.55, ny * 0.55);
 
       this.altitude = p.noise(n.x + 15.232, n.y + 12.654);
-      let nval = this.altitude + 0.06 * (index - number_of_particle_sets / 2);
+      let nval = this.altitude + 0.06 * (-1 + index - number_of_particle_sets / 2);
 
-      this.angle += 1 * p.map(nval, 0, 1, -1, 1);
+      this.angle += 1.2 * p.map(nval, 0, 1, -1, 1);
       this.val = nval;
     }
 
     display(index) {
-      if (this.val > 0.478 && this.val < 0.522) {
+      if (this.val > 0.476 && this.val < 0.524) {
         //p.stroke(palette[index % palette.length]);
         //if (index === 2) p.stroke(255, 25, 20, 20);
         //else p.stroke(20, 10);
         p.push();
-        p.translate(this.pos.x, this.pos.y + 160 - 160 * this.altitude * p.map(this.pos.y, 0, ndimy, 0.4, 3.4));
+        p.translate(this.pos.x, this.pos.y + 80 - 160 * this.altitude * p.map(this.pos.y, 0, ndimy, 0.3, 4.6));
         p.rotate(this.angle);
         p.point(0, 0);
         p.pop();
