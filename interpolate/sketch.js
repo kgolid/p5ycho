@@ -10,12 +10,15 @@ let sketch = function(p) {
 
   let pad = 150;
 
+  let tick = 1;
+
   p.setup = function() {
     p.createCanvas(1000, 1000);
     THE_SEED = p.floor(p.random(9999999));
     p.randomSeed(THE_SEED);
     p.noStroke();
     p.noLoop();
+    //p.frameRate(1);
 
     cgrid = [];
     for (var i = 0; i < cdimy; i++) {
@@ -40,16 +43,23 @@ let sketch = function(p) {
         let sx = p.map(px, px0, px0 + 1, 0, 1);
         let sy = p.map(py, py0, py0 + 1, 0, 1);
 
-        let cu = p.lerpColor(cgrid[py0][px0], cgrid[py0][px0 + 1], sx);
-        let cl = p.lerpColor(cgrid[py0 + 1][px0], cgrid[py0 + 1][px0 + 1], sx);
-        let c = p.lerpColor(cu, cl, sy);
+        let cu = p.lerpColor(cgrid[py0][px0], cgrid[py0][px0 + 1], sigmoid(sx));
+        let cl = p.lerpColor(cgrid[py0 + 1][px0], cgrid[py0 + 1][px0 + 1], sigmoid(sx));
+        let c = p.lerpColor(cu, cl, sigmoid(sy));
         p.fill(c);
         let w = (p.width - pad * 2) / dimx;
         let h = (p.height - pad * 2) / dimy;
         p.rect(pad + w * x, pad + h * y, w, h);
       }
     }
+    tick++;
   };
+
+  function sigmoid(x) {
+    //return p.sqrt(2) * x / p.sqrt(1 + x * x);
+
+    return 1.1 / (1 + p.exp(-6 * (x - 0.5))) - 0.05;
+  }
 
   p.keyPressed = function() {
     if (p.keyCode === 80) p.saveCanvas('sketch_' + THE_SEED, 'jpeg');
