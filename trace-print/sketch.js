@@ -15,7 +15,8 @@ let sketch = function(p) {
 
   p.setup = function() {
     p.createCanvas(4200, 5940);
-    p.background('#eeeee5');
+    //p.background('#eeeee5');
+    p.background('#fff');
     THE_SEED = p.floor(p.random(65536));
     //THE_SEED = 48778;
     p.randomSeed(THE_SEED);
@@ -35,18 +36,21 @@ let sketch = function(p) {
       for (var i = 0; i < number_of_particles; i++) {
         let ry1 = border + p.random(p.height - 2 * border);
         let ry2 = border + p.random(p.height - 2 * border);
+        let ry3 = border + p.random(p.height - 2 * border);
         let b1 = p.map(ry1, 0, p.height, 1.5, 0.6) * border;
         let b2 = p.map(ry2, 0, p.height, 1.5, 0.6) * border;
+        let b3 = p.map(ry3, 0, p.height, 1.5, 0.6) * border;
         let rx1 = b1 + p.random(p.width - 2 * b1);
         let rx2 = b2 + p.random(p.width - 2 * b2);
+        let rx3 = b3 + p.random(p.width - 2 * b3);
         ps.push(
           new Particle(
             //p.randomGaussian(p.width / 2, p.width / 5),
             //border + p.random(p.width - 2 * border),
             //border + p.random(p.height - 2 * border),
             //p.randomGaussian(p.height / 2, p.height / 4),
-            (rx1 + rx2) / 2,
-            (ry1 + ry2) / 2,
+            (rx1 + rx2 + rx3) / 3,
+            (ry1 + ry2 + ry3) / 3,
             p.random(p.TWO_PI)
           )
         );
@@ -64,7 +68,7 @@ let sketch = function(p) {
     });
     tick++;
 
-    if (tick % 500 == 0) console.log(tick, ' / ', print_time);
+    if (tick % 200 == 0) console.log(tick, ' / ', print_time);
 
     if (tick == print_time) {
       display_watermark(THE_SEED);
@@ -92,7 +96,7 @@ let sketch = function(p) {
       let ny = 1.5 * p.pow(p.map(this.pos.y, 0, ndimy, 4.6, 0.2), 2.1);
       //console.log(nx, ny);
 
-      let n = p.createVector(nx * 0.55, ny * 0.55);
+      let n = p.createVector(nx * 0.6, ny * 0.6);
 
       this.altitude = p.noise(n.x + 15.232, n.y + 12.654);
       let nval = this.altitude + 0.06 * (-1 + index - number_of_particle_sets / 2);
@@ -102,13 +106,13 @@ let sketch = function(p) {
     }
 
     display(index) {
-      if (this.val > 0.476 && this.val < 0.524) {
+      if (this.val > 0.474 && this.val < 0.526) {
         //p.stroke(palette[index % palette.length]);
         //if (index === 2) p.stroke(255, 25, 20, 20);
         //else p.stroke(20, 10);
         p.push();
-        p.translate(this.pos.x, this.pos.y + 80 - 160 * this.altitude * p.map(this.pos.y, 0, ndimy, 0.3, 4.6));
-        p.rotate(this.angle);
+        p.translate(this.pos.x, this.pos.y + 180 - 120 * this.altitude * p.map(this.pos.y, 0, ndimy, 0.3, 4.6));
+        //p.rotate(this.angle);
         p.point(0, 0);
         p.pop();
       }
