@@ -32,6 +32,7 @@ let sketch = function(p) {
       new PatchSet(diagonal_stripes, 0, diagonal_stripes, 1, diagonal_stripes, 2, diagonal_stripes, 3),
       new PatchSet(diagonal_stripes, 2, diagonal_stripes, 3, diagonal_stripes, 0, diagonal_stripes, 1),
       new PatchSet(diagonal_stripes, 2, diagonal_stripes, 2, diagonal_stripes, 1, diagonal_stripes, 1),
+      new PatchSet(diagonal_stripes, 0, diagonal_stripes, 0, diagonal_stripes, 0, diagonal_stripes, 0),
       new PatchSet(checkered, 0, checkered, 1, checkered, 2, checkered, 3),
       new PatchSet(checkered, 0, half_n_half, 2, checkered, 2, half_n_half, 0),
       new PatchSet(corners, 0, corners, 1, corners, 0, corners, 1),
@@ -41,7 +42,8 @@ let sketch = function(p) {
       new PatchSet(ell_and_square, 0, ell_and_square, 1, ell_and_square, 2, ell_and_square, 3),
       new PatchSet(ell_and_square, 2, ell_and_square, 3, ell_and_square, 0, ell_and_square, 1),
       new PatchSet(skewed, 0, skewed, 1, skewed, 2, skewed, 3),
-      new PatchSet(spruce, 2, spruce, 2, spruce, 2, spruce, 2)
+      new PatchSet(spruce, 2, spruce, 2, spruce, 2, spruce, 2),
+      new PatchSet(trisquare, 2, trisquare, 1, trisquare, 0, trisquare, 3)
     ];
 
     p.translate(100, 100);
@@ -174,6 +176,7 @@ let sketch = function(p) {
   );
   var yoyo = new Patch([new Shape(semi, 0, 0, 0)], [new Shape(semi, 0, 0, 2)]);
   var ell_and_square = new Patch([new Shape(small_square, 0, 0, 0)], [new Shape(ell, 0, 0, 2)]);
+  var trisquare = new Patch([new Shape(square, 0, 0, 0)], [new Shape(corner, 0, 0, 1), new Shape(corner, 0, 0, 3)]);
 
   // ---- SHAPES ----
 
