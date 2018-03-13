@@ -109,7 +109,7 @@ let sketch = function(p) {
   }
 
   p.keyPressed = function() {
-    if (p.keyCode === 80) p.saveCanvas('tectonic_' + THE_SEED, 'jpeg');
+    if (p.keyCode === 80) p.saveCanvas('tectonic_' + THE_SEED, 'png');
   };
 };
 new p5(sketch);
