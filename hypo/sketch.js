@@ -48,7 +48,7 @@ let sketch = function(p) {
   };
 
   p.draw = function() {
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 80; i++) {
       update();
       //display_apparatus();
       display_ink();
