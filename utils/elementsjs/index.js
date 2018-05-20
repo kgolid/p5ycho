@@ -43,7 +43,7 @@ export function on_path(points, r) {
 
 // Returns angle of line, given two points on line.
 export function angle_of_direction(p1, p2) {
-  return Math.atan2(pdir[1] - p1[1], p2[0] - p2[0]);
+  return Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
 }
 
 // Returns point, given base point, distance and angle.
