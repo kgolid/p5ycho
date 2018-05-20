@@ -1,5 +1,5 @@
 export default class {
-  constructor(x, y, r, c_new, c_ext, c_vert, cols, symmetric) {
+  constructor(x, y, r, c_new, c_ext, c_vert, cols, symmetric, wh_ratio) {
     this.xdim = x;
     this.ydim = y;
     this.radius = r;
@@ -8,6 +8,7 @@ export default class {
     this.chance_vertical = c_vert;
     this.colors = cols;
     this.symmetric = symmetric;
+    this.wh_ratio = wh_ratio ? wh_ratio : 1;
   }
 
   generate() {
@@ -100,22 +101,23 @@ export default class {
     }
 
     function block_set_9(x, y) {
-      if (extend(x, y)) {
-        if (vertical_dir()) return { v: true, h: false, in: true, col: top.col };
-        return { v: false, h: true, in: true, col: left.col };
-      }
-      if (start_new(x, y)) return new_block();
-      return { v: true, h: true, in: false, col: null };
+      //if (extend(x, y)) {
+      if (vertical_dir()) return { v: true, h: false, in: true, col: top.col };
+      return { v: false, h: true, in: true, col: left.col };
+      //}
+      //if (start_new(x, y)) return new_block();
+      //return { v: true, h: true, in: false, col: null };
     }
 
     // ---- Blocks ----
 
     function new_block() {
+      context.main_color = Math.random() > 0.85 ? get_random(context.colors) : context.main_color;
       return {
         v: true,
         h: true,
         in: true,
-        col: Math.random() > 0.75 ? get_random(context.colors) : context.main_color
+        col: context.main_color
       };
     }
 
@@ -142,7 +144,15 @@ export default class {
 
     function active_position(x, y, fuzzy) {
       let fuzziness = 1 + Math.random() * fuzzy;
-      return get_diagonal(x, y, context.xdim / 2, context.ydim / 2) < context.radius * fuzziness;
+      return (
+        get_diagonal(
+          x,
+          context.ydim * ((1 - context.wh_ratio) / 2) + y * context.wh_ratio,
+          context.xdim / 2,
+          context.ydim / 2
+        ) <
+        context.radius * fuzziness
+      );
     }
   }
 }

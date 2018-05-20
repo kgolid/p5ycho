@@ -2,19 +2,22 @@ import BlockBuilder from './logic.js';
 
 let sketch = function(p) {
   let THE_SEED;
+  let size = 10;
+
   let xdim = 61;
   let ydim = 61;
-  let radius = 15;
-  let size = 10;
+
+  let radius = 18;
+  let wh_ratio = 0.8;
   let symmetric = true;
 
-  let chance_start = 0.99;
+  let chance_start = 0.9;
   let chance_extend = 0.8;
   let chance_vertical = 0.5;
 
   let padding_outside = 150;
-  let nx = 4;
-  let ny = 4;
+  let nx = 3;
+  let ny = 3;
   let padding_between_x, padding_between_y;
 
   let colors;
@@ -27,27 +30,7 @@ let sketch = function(p) {
     THE_SEED = p.floor(p.random(9999999));
     p.randomSeed(THE_SEED);
     p.noLoop();
-    p.fill('#eeeee8');
-    p.background('#fff3db');
-
-    /*
-    colors = [
-      p.color(142, 192, 124),
-      p.color(250, 189, 47),
-      p.color(251, 71, 44),
-      p.color(211, 134, 147),
-      p.color(49, 69, 80)
-    ];
-    */
-
-    colors = [
-      p.color('##5468b1'),
-      p.color('#8d9e7a'),
-      p.color('#008774'),
-      p.color('#4b3a42'),
-      p.color('#457661'),
-      p.color('#f7f9ed')
-    ];
+    p.background('#eeeee5');
 
     colors = [
       p.color('#6c843e'),
@@ -59,7 +42,17 @@ let sketch = function(p) {
       p.color('#9c4257')
     ];
 
-    builder = new BlockBuilder(xdim, ydim, radius, chance_start, chance_extend, chance_vertical, colors, symmetric);
+    builder = new BlockBuilder(
+      xdim,
+      ydim,
+      radius,
+      chance_start,
+      chance_extend,
+      chance_vertical,
+      colors,
+      symmetric,
+      wh_ratio
+    );
 
     padding_between_x = (p.width - padding_outside * 2 - nx * xdim * size) / (nx - 1);
     padding_between_y = (p.height - padding_outside * 2 - ny * ydim * size) / (ny - 1);
