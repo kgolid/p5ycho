@@ -3,8 +3,8 @@ import * as Elems from '../utils/elementsjs/index.js';
 let sketch = function(p) {
   let THE_SEED;
 
-  let a_pos = [400, 400];
-  let a_radius = p.random(20, 90);
+  let a_pos = [p.random(300, 500), p.random(300, 500)];
+  let a_radius = p.random(20, 50);
   let a_angle = p.random(Math.PI * 2);
   let a_speed = 0.1;
 
@@ -15,7 +15,7 @@ let sketch = function(p) {
   let b_pos = [400, 400];
   let b_radius = p.random(50, 90);
   let b_angle = p.random(Math.PI * 2);
-  let b_speed = 0.009;
+  let b_speed = 0.007;
 
   let bp_radius = p.random(5, 20);
   let bp_angle = p.random(Math.PI * 2);
