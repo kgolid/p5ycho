@@ -17,7 +17,8 @@ let sketch = function(p) {
   let builder;
 
   p.setup = function() {
-    p.createCanvas(2100, 2100);
+    let canv = p.createCanvas(2100, 2100);
+    canv.parent('sketch-container');
     THE_SEED = p.floor(p.random(9999999));
     p.randomSeed(THE_SEED);
     p.noLoop();
