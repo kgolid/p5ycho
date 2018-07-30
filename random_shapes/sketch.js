@@ -50,7 +50,7 @@ let sketch = function(p) {
 
   let create_initial_array = function(n) {
     p.translate(-size / 2, 0);
-    arr = [];
+    let arr = [];
     for (var i = 0; i <= n; i++) {
       var leaf = { pos: i * (size / n) };
       arr.push(leaf);
