@@ -1,12 +1,16 @@
+require('numeric');
 const perspective = require('perspective-transform');
 
 let sketch = function(p) {
   let THE_SEED;
   let border = 200;
-  let number_of_particles = 3000;
+  let number_of_particles = 8000;
   let number_of_particle_sets = 6;
   let particle_sets = [];
   let tick = 0;
+
+  let squeeze_y = 0.45;
+  let perspective_x = 0.75;
 
   let palette;
 
@@ -14,29 +18,39 @@ let sketch = function(p) {
   let pTransform;
 
   p.setup = function() {
-    p.createCanvas(2000, 2000);
+    p.createCanvas(4000, 4000);
     THE_SEED = p.floor(p.random(9999999));
     p.randomSeed(THE_SEED);
 
+    //p.pixelDensity(4);
+
     p.noFill();
     p.background('#e7e7db');
-    p.stroke(20, 10);
-    p.strokeWeight(1.2);
-    //p.pixelDensity(2);
+    p.stroke(20, 15);
+    p.strokeWeight(1.5);
     p.smooth();
 
-    //var srcCorners = [-1, -1, 1, -1, 1, 1, -1, 1];
-    //var dstCorners = [-0.8, -0.5, 0.8, -0.5, 1, 0.5, -1, 0.5];
+    let pad_x = (p.width - p.width * perspective_x) / 2;
+    let pad_y = (p.height - p.height * squeeze_y) / 2;
 
     var srcCorners = [0, 0, p.width, 0, p.width, p.height, 0, p.height];
-    var dstCorners = [450, 500, p.width - 450, 500, p.width + 450, p.height - 500, -450, p.height - 500];
+    var dstCorners = [
+      pad_x,
+      pad_y,
+      p.width - pad_x,
+      pad_y,
+      p.width + pad_x,
+      p.height - pad_y,
+      -pad_x,
+      p.height - pad_y
+    ];
     pTransform = perspective(srcCorners, dstCorners);
 
     for (var j = 0; j < number_of_particle_sets; j++) {
       let ps = [];
       for (var i = 0; i < number_of_particles; i++) {
         ps.push(
-          new Particle(p.randomGaussian(p.width / 2, 220), p.randomGaussian(p.height / 2, 220), p.random(p.TWO_PI))
+          new Particle(p.randomGaussian(p.width / 2, 600), p.randomGaussian(p.height / 2, 900), p.random(p.TWO_PI))
         );
       }
       particle_sets.push(ps);
@@ -67,17 +81,20 @@ let sketch = function(p) {
       this.pos.x += p.cos(this.angle);
       this.pos.y += p.sin(this.angle);
 
-      let nx = 1.8 * p.map(this.pos.x, 0, p.width, -1, 1);
-      let ny = 1.8 * p.map(this.pos.y, 0, p.height, -1, 1);
+      let nx = 1.3 * p.map(this.pos.x, 0, p.width, -1, 1);
+      let ny = 1.3 * p.map(this.pos.y, 0, p.height, -1, 1);
 
       let np = pTransform.transformInverse(nx, ny);
 
       let n = p.createVector(nx, ny);
 
-      this.altitude = p.noise(n.x + 423.2, n.y - 231.1) + 0.05 * p.noise(n.x * 15 - 113.3, n.y * 15 + 221.1);
+      this.altitude =
+        p.noise(n.x + 423.2, n.y - 231.1) +
+        0.04 * p.noise(n.x * 15 - 113.3, n.y * 8 + 261.1) +
+        0.02 * p.noise(n.x * 30 - 54.3, n.y * 30 + 121.1);
       let nval = (this.altitude + 0.065 * (index - number_of_particle_sets / 2)) % 1;
 
-      this.angle += 1.8 * p.map(nval, 0, 1, -1, 1);
+      this.angle += 0.8 * p.map(nval, 0, 1, -1, 1);
       this.val = nval;
     }
 
@@ -85,7 +102,7 @@ let sketch = function(p) {
       if (this.val > 0.47 && this.val < 0.53) {
         //const pnt = pTransform.transform(this.pos.x, this.pos.y);
 
-        let np = pTransform.transform(this.pos.x, this.pos.y + 350 - this.altitude * 700);
+        let np = pTransform.transform(this.pos.x, this.pos.y + 1500 - this.altitude * 2700);
         p.point(np[0], np[1]);
       }
     }

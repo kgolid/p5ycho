@@ -1,7 +1,9 @@
 module.exports = {
   entry: {
     perlin: './perlin/sketch.js',
-    gaussian: './gaussian/sketch.js'
+    gaussian: './gaussian/sketch.js',
+    trace: './trace-perspective/sketch.js',
+    tracebig: './trace-perspective-big/sketch.js'
   },
 
   output: {
