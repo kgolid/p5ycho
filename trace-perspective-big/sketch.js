@@ -1,4 +1,4 @@
-require('numeric');
+const numeric = require('numeric');
 const perspective = require('perspective-transform');
 
 let sketch = function(p) {
