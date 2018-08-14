@@ -1,28 +1,22 @@
-const numeric = require('numeric');
 const perspective = require('perspective-transform');
 
 let sketch = function(p) {
   let THE_SEED;
-  let border = 200;
   let number_of_particles = 8000;
   let number_of_particle_sets = 6;
   let particle_sets = [];
-  let tick = 0;
 
   let squeeze_y = 0.45;
   let perspective_x = 0.75;
 
-  let palette;
-
-  let nzoom = 10;
   let pTransform;
 
   p.setup = function() {
-    p.createCanvas(4000, 4000);
+    var cnv = p.createCanvas(4000, 4000);
+    cnv.style('width', '1000px');
+    cnv.style('height', '1000px');
     THE_SEED = p.floor(p.random(9999999));
     p.randomSeed(THE_SEED);
-
-    //p.pixelDensity(4);
 
     p.noFill();
     p.background('#e7e7db');
@@ -100,8 +94,6 @@ let sketch = function(p) {
 
     display(index) {
       if (this.val > 0.47 && this.val < 0.53) {
-        //const pnt = pTransform.transform(this.pos.x, this.pos.y);
-
         let np = pTransform.transform(this.pos.x, this.pos.y + 1500 - this.altitude * 2700);
         p.point(np[0], np[1]);
       }
