@@ -1,23 +1,21 @@
 const perspective = require('perspective-transform');
 
-let sketch = function(p) {
+let sketch = function (p) {
   let THE_SEED;
-  let number_of_particles = 8000;
-  let number_of_particle_sets = 6;
-  let particle_sets = [];
+  const number_of_particles = 8000;
+  const number_of_particle_sets = 6;
+  let particle_sets;
 
-  let squeeze_y = 0.45;
-  let perspective_x = 0.75;
+  const squeeze_y = 0.45;
+  const perspective_x = 0.75;
 
   let pTransform;
 
-  p.setup = function() {
-    var cnv = p.createCanvas(4000, 4000);
-    cnv.style('width', '1000px');
-    cnv.style('height', '1000px');
-    THE_SEED = p.floor(p.random(9999999));
-    p.randomSeed(THE_SEED);
+  let tick;
+  const print_time = 2000;
 
+  p.setup = function () {
+    p.createCanvas(4000, 4000);
     p.noFill();
     p.background('#e7e7db');
     p.stroke(20, 15);
@@ -36,31 +34,56 @@ let sketch = function(p) {
       p.width + pad_x,
       p.height - pad_y,
       -pad_x,
-      p.height - pad_y
+      p.height - pad_y,
     ];
     pTransform = perspective(srcCorners, dstCorners);
 
-    for (var j = 0; j < number_of_particle_sets; j++) {
-      let ps = [];
-      for (var i = 0; i < number_of_particles; i++) {
-        ps.push(
-          new Particle(p.randomGaussian(p.width / 2, 600), p.randomGaussian(p.height / 2, 900), p.random(p.TWO_PI))
-        );
-      }
-      particle_sets.push(ps);
-    }
+    reset();
   };
 
-  p.draw = function() {
-    particle_sets.forEach(function(particles, index) {
-      particles.forEach(function(particle) {
+  p.draw = function () {
+    particle_sets.forEach(function (particles, index) {
+      particles.forEach(function (particle) {
         particle.update(index);
         particle.display(index);
       });
     });
+
+    tick++;
+
+    if (tick % 100 == 0) console.log(tick, ' / ', print_time);
+
+    if (tick == print_time) {
+      p.saveCanvas('curvescape_' + THE_SEED, 'jpg');
+      reset();
+    }
   };
 
-  p.keyPressed = function() {
+  function reset() {
+    THE_SEED = p.floor(p.random(9999999));
+    p.randomSeed(THE_SEED);
+    p.noiseSeed(THE_SEED);
+
+    particle_sets = [];
+    for (var j = 0; j < number_of_particle_sets; j++) {
+      let ps = [];
+      for (var i = 0; i < number_of_particles; i++) {
+        ps.push(
+          new Particle(
+            p.randomGaussian(p.width / 2, 600),
+            p.randomGaussian(p.height / 2, 900),
+            p.random(p.TWO_PI)
+          )
+        );
+      }
+      particle_sets.push(ps);
+    }
+    tick = 0;
+
+    p.background('#e7e7db');
+  }
+
+  p.keyPressed = function () {
     if (p.keyCode === 80) p.saveCanvas('sketch_' + THE_SEED, 'jpeg');
   };
 
@@ -94,7 +117,10 @@ let sketch = function(p) {
 
     display(index) {
       if (this.val > 0.47 && this.val < 0.53) {
-        let np = pTransform.transform(this.pos.x, this.pos.y + 1500 - this.altitude * 2700);
+        let np = pTransform.transform(
+          this.pos.x,
+          this.pos.y + 1500 - this.altitude * 2700
+        );
         p.point(np[0], np[1]);
       }
     }
